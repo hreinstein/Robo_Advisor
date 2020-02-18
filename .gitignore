@@ -1,0 +1,9 @@
+# .gitignore
+
+.DS_Store
+
+#ignore our secret credentials 
+.env
+
+#just an example 
+auth/google-credintials.json 
