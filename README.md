@@ -10,6 +10,12 @@ Issues requests to the [...] LINK ... in order to provide automated stock tradin
 + Python 3.7
 + Pip 
 
+## API Set Up          FINISH THISSSSS
+
+Visit: https://www.alphavantage.co/support/#api-key and obtain an API Key 
+
+Create a new file in this repo called .env and place inside the following contents 
+
 ## Installation
 
 Clone or download [this repositiory........] [ link .......] onto your computer, then navigate there from the command line: 
