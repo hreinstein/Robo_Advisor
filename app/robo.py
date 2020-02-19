@@ -4,8 +4,12 @@ import requests
 import json
 import os 
 from dotenv import load_dotenv
+import datetime
 
 load_dotenv()
+
+def to_usd(my_price):
+    return "${0:.2f}".format(my_price) #> $10,000.00
 
 print("REQUESTING SOME DATA FROM THE INTERNET...")
 
@@ -26,7 +30,7 @@ print(type(parsed_response)) #> dict
 print(parsed_response)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-
+latest_close = parsed_response["Time Series (Daily)"]["2020-02-19"]["4. close"] #> $1,000.00
 
 #handle response errors: 
 if "Error Messge" in response.text:
@@ -37,10 +41,10 @@ print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print("REQUEST AT: 2018-02-20 02:00pm") #TODO: use date time module
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
-print("LATEST CLOSE: $100,000.00")
+print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print("RECENT HIGH: $101,000.00")
 print("RECENT LOW: $99,000.00")
 print("-------------------------")
