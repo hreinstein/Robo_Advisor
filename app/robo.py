@@ -30,7 +30,11 @@ print(type(parsed_response)) #> dict
 print(parsed_response)
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-latest_close = parsed_response["Time Series (Daily)"]["2020-02-19"]["4. close"] #> $1,000.00
+
+tsd = parsed_response["Time Series (Daily)"]
+dates = list(tsd.keys()) # TODO: assumes the first day in on top, sort to ensure that the latest day is first 
+latest_day = dates[0] #"2020-02-20"
+latest_close = tsd[latest_day]["4. close"] #> 1,000.00
 
 #handle response errors: 
 if "Error Messge" in response.text:
