@@ -5,9 +5,9 @@ import json
 import csv
 import os 
 from dotenv import load_dotenv
-load_dotenv()
 import datetime
 
+load_dotenv() 
 
 # format to usd
 def to_usd(my_price):
@@ -18,7 +18,7 @@ def to_usd(my_price):
 print("REQUESTING SOME DATA FROM THE INTERNET...")
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
-symbol = "TSLA" # todo: ask for user input 
+symbol = "TSLA" #TODO: ask for user input 
 
 # request API url 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
@@ -78,7 +78,6 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
             "close": daily_prices["4. close"],
             "volume": daily_prices["5. volume"]
         })
-   
 
 print("-------------------------")
 print("SELECTED SYMBOL: XYZ")
@@ -91,7 +90,7 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}") # maximum of all daily high prices
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!")
+print("RECOMMENDATION: BUY!") #TODO: RECOMMENDATION
 print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_file_path} ...")

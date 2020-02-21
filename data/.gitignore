@@ -1,9 +1,11 @@
-# .gitignore
+# data/.gitignore
 
-.DS_Store
+# h/t: https://stackoverflow.com/a/5581995/670433
 
-#ignore our secret credentials 
+# ignore all files in this directory:
 .env
 
-#just an example 
-auth/google-credintials.json 
+# except this gitignore file:
+!.gitignore
+
+

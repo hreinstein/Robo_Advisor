@@ -12,9 +12,13 @@ Issues requests to the [...] LINK ... in order to provide automated stock tradin
 
 ## API Set Up          FINISH THISSSSS
 
-Visit: https://www.alphavantage.co/support/#api-key and obtain an API Key 
+Before using or developing this application, please [obtain an AlphaVantage API Key](https://www.alphavantage.co/support/#api-key) (e.g. "abc123").
 
-Create a new file in this repo called .env and place inside the following contents 
+Create a new file in this repo called .env and place inside the following contents:
+
+```
+ALPHA_ADVANTAGE_KEY = "___________________" 
+```
 
 ## Installation
 
@@ -36,3 +40,5 @@ conda activate stocks-env
 pip install -r requirements.txt
 
 python app/robo.py
+
+## Setup 
