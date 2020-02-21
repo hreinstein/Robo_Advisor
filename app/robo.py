@@ -13,12 +13,20 @@ load_dotenv()
 def to_usd(my_price):
     return "${0:.2f}".format(my_price) #> $10,000.00
 
+
+
 # Info inputs
 
+API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
+print()
+symbol = input("Please enter a company ticker: ") #TODO: ask for user input 
+#if len(symbol) > 5: 
+#    print("Please enter a properly formed stock symbol like 'MSFT'. Please try again.")
+#else: 
+ #   print()
+print()
 print("REQUESTING SOME DATA FROM THE INTERNET...")
 
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
-symbol = "TSLA" #TODO: ask for user input 
 
 # request API url 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
@@ -32,14 +40,26 @@ parsed_response = json.loads(response.text)
 print(type(parsed_response)) #> dict 
 print(parsed_response)
 
-# compute lastest day 
+
+# handle response errors: 
+if "Error Message" in response.text:
+    print("----------------------------------------------------")
+    print("Sorry, could not find that symbol, please try again.")
+    print("----------------------------------------------------")
+    exit() 
+
+
+# compute lastest day / last refreshed 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-# compute latest close
 tsd = parsed_response["Time Series (Daily)"]
-dates = list(tsd.keys()) # TODO: assumes the first day in on top, sort to ensure that the latest day is first 
+dates = list(tsd.keys()) # TODO: assumes the first day is on top, sort to ensure that the latest day is first 
 latest_day = dates[0] #"2020-02-19"
+
+# compute lastest close 
 latest_close = tsd[latest_day]["4. close"] #> 1,000.00
+
+
 
 # compute high and low prices 
 high_prices = []
@@ -55,10 +75,8 @@ recent_high = max(high_prices)
 recent_low = min(low_prices)
 
 
-# handle response errors: 
-if "Error Messge" in response.text:
-    print("Sorry, could not find that symbol, please try again")
-    exit() 
+
+
 
 # csv 
 #csv_file_path = "data/prices.csv" # a relative filepath
@@ -80,7 +98,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
         })
 
 print("-------------------------")
-print("SELECTED SYMBOL: XYZ")
+print(f"SELECTED SYMBOL: {symbol}")
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
 print("REQUEST AT: 2018-02-20 02:00pm") #TODO: use date time module
@@ -90,8 +108,12 @@ print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
 print(f"RECENT HIGH: {to_usd(float(recent_high))}") # maximum of all daily high prices
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
-print("RECOMMENDATION: BUY!") #TODO: RECOMMENDATION
-print("RECOMMENDATION REASON: TODO")
+if float(latest_close) < (float(recent_low) * .2 ) + float(recent_low):
+    print("RECOMMENDATION: BUY!")
+    print("RECOMMENDATION REASON: TODO")
+else: 
+    print("RECOMMENDATION: DONT BUY")
+    print("RECOMMENDATION REASON: TODO")
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_file_path} ...")
 print("-------------------------")
@@ -99,3 +121,10 @@ print("HAPPY INVESTING!")
 print("-------------------------")
 
 
+#TODO: make this cooler if possible 
+
+
+if float(latest_close) < (float(recent_low) * .2 ) + float(recent_low):
+    print("BUY")
+else: 
+    print("DONT BUY")
