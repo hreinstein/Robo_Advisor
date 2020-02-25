@@ -1,6 +1,6 @@
 # "Robo Advisor" Project
 
-A solution for the ["Robo Advisor" project] https://github.com/prof-rossetti/intro-to-python/tree/master/projects/robo-advisor
+Please view the ["Robo Advisor" project](https://github.com/prof-rossetti/intro-to-python/tree/master/projects/robo-advisor) for a project description and solution.
 
 Issues requests to the [...] LINK ... in order to provide automated stock trading recommendations. 
 
@@ -20,25 +20,42 @@ Create a new file in this repo called .env and place inside the following conten
 ALPHA_ADVANTAGE_KEY = "___________________" 
 ```
 
+
 ## Installation
 
-Clone or download [this repositiory........] [ link .......] onto your computer, then navigate there from the command line: 
+Clone or download the [Robo_Advisor repository](https://github.com/hreinstein/Robo_Advisor) onto your computer, then navigate there from the command line: 
+
 
 ```sh
-cd Robo_Advisor
+cd ~/Desktop/Your_File_Name
 ```
 
-more about stuff.........................
+
+## Environment Setup
+Create and activate a new Anaconda virtual environment:
+
+```sh
+conda create -n shopping-env python=3.7 # (first time only)
+conda activate shopping-env
+```
 
 
-requests
-python-dotenv
+## Required Packages
+Using pip, install the following packages.
 
-conda create -n stocks-env python=3.7 # (first time only)
-conda activate stocks-env
-
+```sh
 pip install -r requirements.txt
+pip install requests 
+# ANY OTHERS ????  python-dotenv??????????
 
+```
+
+## Usage
+Run the python script from the command line using the python command: 
+
+```sh
 python app/robo.py
+```
 
-## Setup 
+
+
