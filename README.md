@@ -2,7 +2,6 @@
 
 Please view the ["Robo Advisor" project](https://github.com/prof-rossetti/intro-to-python/tree/master/projects/robo-advisor) for a project description and solution.
 
-Issues requests to the [...] LINK ... in order to provide automated stock trading recommendations. 
 
 ## Prerequestites 
 
