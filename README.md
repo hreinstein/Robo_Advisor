@@ -10,7 +10,7 @@ Issues requests to the [...] LINK ... in order to provide automated stock tradin
 + Python 3.7
 + Pip 
 
-## API Set Up          FINISH THISSSSS
+## API Set Up          
 
 Before using or developing this application, please [obtain an AlphaVantage API Key](https://www.alphavantage.co/support/#api-key) (e.g. "abc123").
 
@@ -46,8 +46,7 @@ Using pip, install the following packages.
 ```sh
 pip install -r requirements.txt
 pip install requests 
-# ANY OTHERS ????  python-dotenv??????????
-
+pip install python-dotenv
 ```
 
 ## Usage

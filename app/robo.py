@@ -13,19 +13,20 @@ load_dotenv()
 def to_usd(my_price):
     return "${0:.2f}".format(my_price) #> $10,000.00
 
-
 # Inputs
 
-#API Key 
-
+# API Key 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
 symbol = input("Please enter a company ticker: ") 
 
-# preliminary validation 
-if str.isnumeric(symbol) or len(symbol) > 5: 
-    print("Sorry, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
-    symbol = input("Please enter a company ticker: ") 
 
+# preliminary validation 
+while True:
+    if str.isnumeric(symbol) or len(symbol) > 5: 
+        print("Sorry, expecting a properly-formed stock symbol like 'MSFT'. Please try again.")
+        symbol = input("Please enter a company ticker: ") 
+    else:
+        break
 
 # request API url 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
@@ -84,7 +85,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
             "volume": daily_prices["5. volume"]
         })
 
-#date and time 
+# date and time 
 today = datetime.datetime.today()
 
 #-------------------------------------------------------------------------------------------------------------------
