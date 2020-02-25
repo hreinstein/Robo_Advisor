@@ -22,7 +22,7 @@ ALPHA_ADVANTAGE_KEY = "___________________"
 
 ## Installation
 
-Clone or download the [Robo_Advisor repository](https://github.com/hreinstein/Robo_Advisor) onto your computer, then navigate there from the command line: 
+Fork, then clone or download the [Robo_Advisor repository](https://github.com/hreinstein/Robo_Advisor) onto your computer, then navigate there from the command line: 
 
 
 ```sh
@@ -54,6 +54,7 @@ Run the python script from the command line using the python command:
 ```sh
 python app/robo.py
 ```
+
 
 
 
