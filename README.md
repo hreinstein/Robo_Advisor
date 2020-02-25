@@ -1,6 +1,6 @@
 # "Robo Advisor" Project
 
-Please view the ["Robo Advisor" project](https://github.com/prof-rossetti/intro-to-python/tree/master/projects/robo-advisor) for a project description and solution.
+Please view the ["Robo Advisor" project](https://github.com/prof-rossetti/intro-to-python/tree/master/projects/robo-advisor) for a project description.
 
 
 ## Prerequestites 

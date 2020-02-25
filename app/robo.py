@@ -38,7 +38,7 @@ response = requests.get(request_url)
 
 # response errors validation
 if "Error Message" in response.text:
-    print(f"Sorry, could not find {symbol}, please enter a valid ticker.")
+    print(f"Sorry, could not find stock symbol {symbol}, please enter a valid company ticker.")
     exit() 
 else: 
     parsed_response = json.loads(response.text) 
