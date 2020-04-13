@@ -1,23 +1,77 @@
 # app/robo.py
-
-import requests
 import json
 import csv
 import os 
-from dotenv import load_dotenv
 import datetime
 
+from dotenv import load_dotenv
+import requests
+
+
 load_dotenv() 
-
-# format to usd
-def to_usd(my_price):
-    return "${0:.2f}".format(my_price) #> $10,000.00
-
-# Inputs
 
 # API Key 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
 symbol = input("Please enter a company ticker: ") 
+
+
+# format to usd
+def to_usd(my_price):
+    """
+    Converts a numeric value to usd-formatted string, for printing and display purposes. 
+    
+    Param: my_price (int or float) like 20.2222
+
+    Example: to usd(20.2222)
+    Returns: $20.22
+    """
+    return "${0:.2f}".format(my_price) #> $10,000.00
+
+
+def get_response(symbol):
+    request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
+    response = requests.get(request_url)
+    parsed_response = json.loads(response.text)
+    return parsed_response
+
+def transform_response(parsed_response):
+    """
+    parsed_response should be a dictionary representing the original JSON response
+    it should have keys: "Meta Data" and "Time Series Daily
+    """
+    tsd = parsed_response["Time Series (Daily)"]
+
+    rows = []
+    for date, daily_prices in tsd.items(): # see: https://github.com/prof-rossetti/georgetown-opim-243-201901/blob/master/notes/python/datatypes/dictionaries.md
+        row = {
+            "timestamp": date,
+            "open": float(daily_prices["1. open"]),
+            "high": float(daily_prices["2. high"]),
+            "low": float(daily_prices["3. low"]),
+            "close": float(daily_prices["4. close"]),
+            "volume": int(daily_prices["5. volume"])
+        }
+        rows.append(row)
+
+    return rows
+
+def write_to_csv(rows, csv_filepath):
+    # rows should be a list of dictionaries
+    # csv_filepath should be a string filepath pointing to where the data should be written
+
+    csv_headers = ["timestamp", "open", "high", "low", "close", "volume"]
+
+    with open(csv_filepath, "w") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=csv_headers)
+        writer.writeheader() # uses fieldnames set above
+        for row in rows:
+            writer.writerow(row)
+    return True 
+
+
+
+# -------------------------------------------------------------------------------------------------------------------------
+
 
 
 # preliminary validation 
