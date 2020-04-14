@@ -2,18 +2,16 @@
 import json
 import csv
 import os 
-import datetime
+import datetime as dt
 
 from dotenv import load_dotenv
 import requests
-
 
 load_dotenv() 
 
 # API Key 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
 symbol = input("Please enter a company ticker: ") 
-
 
 # format to usd
 def to_usd(my_price):
@@ -31,7 +29,6 @@ def get_response(symbol):
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={symbol}&apikey={API_KEY}"
     print("Requesting some Data from the internet...")
     print("Request URL:", request_url)
-    print("\n")
     response = requests.get(request_url)
 
     if "Error Message" in response.text:
@@ -50,9 +47,6 @@ def transform_response(parsed_response):
     it should have keys: "Meta Data" and "Time Series Daily
     """
     tsd = parsed_response["Time Series (Daily)"]
-    
-    dates = list(tsd.keys()) # TODO: assumes the first day is on top, sort to ensure that the latest day is first 
-    #latest_day = dates[0] #"2020-02-19"
 
     rows = []
     for date, daily_prices in tsd.items(): # see: https://github.com/prof-rossetti/georgetown-opim-243-201901/blob/master/notes/python/datatypes/dictionaries.md
@@ -87,8 +81,8 @@ def write_to_csv(rows, csv_filepath):
 
 if __name__ == "__main__":
 
-    today = datetime.datetime.today()  # date and time 
-
+    today = dt.datetime.now()  # date and time 
+    
     parsed_response = get_response(symbol)
 
     while True:
@@ -116,39 +110,36 @@ if __name__ == "__main__":
 
     # PRINT RESULTS 
 
-    formatted_time_now = today.strftime("%Y-%m-%d %H:%M:%S") #> '2019-03-03 14:45:27'
-
-    #formatted_csv_file_path = csv_file_path.split("../")[1] #> data/prices.c
+    formatted_time_now = today.strftime("%Y-%m-%d %I:%M %p") #> '2019-03-03 14:45:27'
     
-    print("-------------------------")
-    print(f"SELECTED STOCK: {symbol}")
-    print("-------------------------")
-    print(f"REQUEST AT: {formatted_time_now}") 
-    print(f"LATEST DAY: {last_refreshed}")
-    print("-------------------------")
-    print(f"LATEST CLOSE: {to_usd(latest_close)}")
-    print(f"RECENT HIGH:  {to_usd(recent_high)}") # maximum of all daily high prices
-    print(f"RECENT LOW:   {to_usd(recent_low)}") # minimum ""
-    print("-------------------------")                    
+    recommendation = ""
+
+    recommendation += "\n-------------------------"
+    recommendation += f"\nSELECTED STOCK: {symbol}"
+    recommendation += "\n-------------------------"
+    recommendation += f"\nREQUEST AT: {formatted_time_now}"
+    recommendation += f"\nREFRESH DATE: {last_refreshed}"
+    recommendation += "\n-------------------------"
+    recommendation += f"\nLATEST CLOSE: {to_usd(latest_close)}"
+    recommendation += f"\nRECENT HIGH:  {to_usd(recent_high)}" # maximum of all daily high prices
+    recommendation += f"\nRECENT LOW:   {to_usd(recent_low)}" # minimum ""
+    recommendation += "\n-------------------------"                 
     if float(latest_close) <= (float(recent_low) * 1.15) and float(latest_close) < (float(recent_high) + float(recent_low))/2:
-        print("RECOMMENDATION: BUY!")
-        print(f"RECOMMENDATION REASON: {symbol}'s latest closing price is less than 15% above its recent low and less than {symbol}'s average price, satisfying the 'BUY' threshold.") 
+        recommendation += "\nRECOMMENDATION: BUY!"
+        recommendation += f"\nRECOMMENDATION REASON: {symbol}'s latest closing price is less than 15% above its recent low and less than {symbol}'s average price, satisfying the 'BUY' threshold." 
     elif float(latest_close) >= (float(recent_high) * .85) and float(latest_close) > (float(recent_high) + float(recent_low))/2:
-         print("RECOMMENDATION: Sell!")
-         print(f"RECOMMENDATION REASON: {symbol}'s latest closing price is greater than 85% of its recent high and greater than {symbol}'s average price, satisfying the 'SELL' threshold.") 
+         recommendation += "\nRECOMMENDATION: Sell!"
+         recommendation += f"\nRECOMMENDATION REASON: {symbol}'s latest closing price is greater than 85% of its recent high and greater than {symbol}'s average price, satisfying the 'SELL' threshold." 
     else: 
-        print("RECOMMENDATION: HOLD")
-        print(f"RECOMMENDATION REASON: {symbol}'s stock performance is steady, we recommend to HOLD for now.") 
-    print("-------------------------")
-    print(f"WRITING DATA TO CSV: {csv_file_path} ...")
-    print("-------------------------")
-    print("HAPPY INVESTING!")
-    print("-------------------------")
+        recommendation += "RECOMMENDATION: HOLD"
+        print(f"\nRECOMMENDATION REASON: {symbol}'s stock performance is steady, we recommend to HOLD for now.") 
+recommendation +="\n-------------------------"
+recommendation += f"\nWRITING DATA TO CSV: {csv_file_path} ..."
+recommendation +="\n-------------------------"
+recommendation +="\nHAPPY INVESTING!"
+recommendation += f"\n-------------------------"
 
-
-
-
-
+print(recommendation)
 
 
 # -------------------------------------------------------------------------------------------------------------------------
