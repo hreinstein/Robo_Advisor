@@ -1,6 +1,6 @@
 # "Robo Advisor" Project
 
-Please view the ["Robo Advisor" project](https://github.com/prof-rossetti/intro-to-python/tree/master/projects/robo-advisor) for a project description.
+Please view the ["Codebase Cleanup" project](https://github.com/prof-rossetti/intro-to-python/blob/master/exercises/codebase-cleanup/README.md) for a project description.
 
 
 ## Prerequestites 
