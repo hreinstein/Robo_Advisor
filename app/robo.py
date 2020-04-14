@@ -11,7 +11,7 @@ load_dotenv()
 
 # API Key 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default = "OOPS") 
-symbol = input("Please enter a company ticker: ") 
+
 
 # format to usd
 def to_usd(my_price):
@@ -81,6 +81,8 @@ def write_to_csv(rows, csv_filepath):
 
 if __name__ == "__main__":
 
+    symbol = input("Please enter a company ticker: ") 
+
     today = dt.datetime.now()  # date and time 
     
     parsed_response = get_response(symbol)
@@ -133,13 +135,13 @@ if __name__ == "__main__":
     else: 
         recommendation += "RECOMMENDATION: HOLD"
         print(f"\nRECOMMENDATION REASON: {symbol}'s stock performance is steady, we recommend to HOLD for now.") 
-recommendation +="\n-------------------------"
-recommendation += f"\nWRITING DATA TO CSV: {csv_file_path} ..."
-recommendation +="\n-------------------------"
-recommendation +="\nHAPPY INVESTING!"
-recommendation += f"\n-------------------------"
+    recommendation += "\n-------------------------"
+    recommendation += f"\nWRITING DATA TO CSV: {csv_file_path} ..."
+    recommendation += "\n-------------------------"
+    recommendation += "\nHAPPY INVESTING!"
+    recommendation += f"\n-------------------------"
 
-print(recommendation)
+    print(recommendation)
 
 
 # -------------------------------------------------------------------------------------------------------------------------
