@@ -13,7 +13,7 @@ Please view the ["Codebase Cleanup" project](https://github.com/prof-rossetti/in
 
 ## Installation
 
-Fork, then clone or download the [Robo_Advisor repository](https://github.com/hreinstein/Robo_Advisor) onto your computer, then navigate there from the command line: 
+Fork, then clone or download the [Robo_Advisor repository](https://github.com/hreinstein/Robo_Advisor/tree/Robo_Cleanup) onto your computer, then navigate there from the command line: 
 
 
 ```sh
